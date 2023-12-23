@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks.Triggers;
 using JetBrains.Annotations;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -168,10 +169,15 @@ public class GameManager : MonoBehaviour
         
 #if UNITY_EDITOR
         // Quitting in Unity Editor: 
+    if (EditorApplication.isPlaying) {
+        EditorApplication.isPlaying = false;
+    }
 #elif UNITY_WEBPLAYER || UNITY_WEBGL
         // Quitting in the WebGL build: 
+    ResetGame();
 #else // !UNITY_WEBPLAYER
         // Quitting in all other builds: 
+    Application.Quit();
 #endif
     }
 }
